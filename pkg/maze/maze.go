@@ -1,10 +1,9 @@
-package main
+package maze
 
 import (
 	"fmt"
 	"math/rand"
 	"strings"
-	"time"
 )
 
 type Coord struct {
@@ -234,15 +233,4 @@ func (r *RandomWalkSolver) Step() bool {
 	r.visited[cur] = true
 
 	return false
-}
-
-func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
-	// Mazes are 25x25 for now
-	m := NewMaze(25, 50)
-	s := NewRandomWalkSolver(&m)
-	for !s.Step() {
-		// continue...
-	}
-	fmt.Printf(m.String())
 }
