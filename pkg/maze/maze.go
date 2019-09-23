@@ -177,29 +177,34 @@ type RandomWalkSolver struct {
 func NewRandomWalkSolver(m *Maze) RandomWalkSolver {
 	// TODO Open a start AND an end (maybe label em?)
 	var first Coord
-	// Choose top, left, bottom, right
-	wallChoice := rand.Intn(4)
+	// Choose top or left for start bottom, right
+	wallChoice := rand.Intn(2)
 	switch wallChoice {
 	case 0:
 		// Top
 		first.Row = 0
-		first.Col = rand.Intn(m.Width)
+		first.Col = rand.Intn(m.Width-2) + 1
 		m.OpenUp(first)
 	case 1:
-		// Right
-		first.Row = rand.Intn(m.Height)
-		first.Col = m.Width - 1
-		m.OpenRight(first)
-	case 2:
-		// Bottom
-		first.Row = m.Height - 1
-		first.Col = rand.Intn(m.Width)
-		m.OpenDown(first)
-	case 3:
 		// Left
-		first.Row = rand.Intn(m.Height)
+		first.Row = rand.Intn(m.Height-2) + 1
 		first.Col = 0
 		m.OpenLeft(first)
+	}
+
+	// Now choose bottom or right for end
+	wallChoice = rand.Intn(2)
+	switch wallChoice {
+	case 0:
+		// Right
+		first.Row = rand.Intn(m.Height-2) + 1
+		first.Col = m.Width - 1
+		m.OpenRight(first)
+	case 1:
+		// Bottom
+		first.Row = m.Height - 1
+		first.Col = rand.Intn(m.Width-2) + 1
+		m.OpenDown(first)
 	}
 
 	return RandomWalkSolver{
